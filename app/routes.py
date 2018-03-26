@@ -70,10 +70,13 @@ def register():
 
 
 @app.route('/list')
+@login_required
 def list_account():
     # choose database
-    database = db_mongo['viettel']
-    bank_collection = database['bank']
+    database = db_mongo.viettel
+    bank_collection = database.bank
+    list_collection = bank_collection.find()
+    return render_template('accounts.html', title='Accounts', accounts=list_collection)
 
 
 

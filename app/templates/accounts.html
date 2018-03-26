@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <h2>List Accounts</h2>
+        <table>
+            <tr>
+                <th>Account number</th>
+                <th>Balance</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Employer</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>State</th>
+            </tr>
+            {% for account in accounts %}
+            <tr>
+                <td>{{account.account_number}}</td>
+                <td>{{account.balance}}</td>
+                <td>{{account.firstname}}</td>
+                <td>{{account.lastname}}</td>
+                <td>{{account.age}}</td>
+                <td>{{account.gender}}</td>
+                <td>{{account.address}}</td>
+                <td>{{account.employer}}</td>
+                <td>{{account.email}}</td>
+                <td>{{account.city}}</td>
+                <td>{{account.state}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
