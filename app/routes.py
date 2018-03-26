@@ -1,10 +1,9 @@
-from app import app
+from app import app, db, db_mongo
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
-from app import db
 
 
 @app.route('/')
@@ -68,6 +67,13 @@ def register():
         flash('Registered successful!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/list')
+def list_account():
+    # choose database
+    database = db_mongo['viettel']
+    bank_collection = database['bank']
 
 
 
