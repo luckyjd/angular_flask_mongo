@@ -6,3 +6,6 @@ a CRUD and search tool
 
     $ sudo pip install -r requirements.txt
 
+
+
+https://github.com/michaelbromley/angularUtils/tree/master/src/directives/pagination
