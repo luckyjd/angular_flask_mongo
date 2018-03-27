@@ -1,0 +1,32 @@
+#accounts {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#accounts tr td, #accounts tr th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    max-width: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#accounts tr td input{
+    max-width: 90%;
+}
+#accounts tr td:hover {
+    overflow: visible;
+
+}
+
+#accounts tr:nth-child(even){background-color: #f2f2f2;}
+
+#accounts tr:hover {background-color: #ddd;}
+
+#accounts tr th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

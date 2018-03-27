@@ -3,35 +3,67 @@
 {% block content %}
     <div>
         <h2>List Accounts</h2>
-        <table>
-            <tr>
-                <th>Account number</th>
-                <th>Balance</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Employer</th>
-                <th>Email</th>
-                <th>City</th>
-                <th>State</th>
-            </tr>
-            {% for account in accounts %}
-            <tr>
-                <td>{{account.account_number}}</td>
-                <td>{{account.balance}}</td>
-                <td>{{account.firstname}}</td>
-                <td>{{account.lastname}}</td>
-                <td>{{account.age}}</td>
-                <td>{{account.gender}}</td>
-                <td>{{account.address}}</td>
-                <td>{{account.employer}}</td>
-                <td>{{account.email}}</td>
-                <td>{{account.city}}</td>
-                <td>{{account.state}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        <div ng-app="myApp" ng-controller="myCtrl">
+            <table id="accounts">
+                <tr>
+                    <th>Account number</th>
+                    <th>Balance</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Employer</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="account_number" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="balance" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="firstname" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="lastname" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="age" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="gender" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="address" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="employer" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="email" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="city" placeholder="...." size="15" /></td>
+                    <td><input type="text" name="state" placeholder="...." size="15" /></td>
+                    <td><button>Search</button></td>
+                </tr>
+                {% for account in accounts %}
+                <tr>
+                    <td>{{account.account_number}}</td>
+                    <td>{{account.balance}}</td>
+                    <td>{{account.firstname}}</td>
+                    <td>{{account.lastname}}</td>
+                    <td>{{account.age}}</td>
+                    <td>{{account.gender}}</td>
+                    <td>{{account.address}}</td>
+                    <td>{{account.employer}}</td>
+                    <td>{{account.email}}</td>
+                    <td>{{account.city}}</td>
+                    <td>{{account.state}}</td>
+                    <td>
+                        <a href="#">Detail</a>
+                        <a href="#">Edit</a>
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    var
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+      $http.get("welcome.htm")
+      .then(function(response) {
+          $scope.myWelcome = response.data;
+      });
+    });
 {% endblock %}
