@@ -9,3 +9,4 @@ a CRUD and search tool
 
 
 https://github.com/michaelbromley/angularUtils/tree/master/src/directives/pagination
+https://www.youtube.com/watch?v=I32gfMCNVm8
