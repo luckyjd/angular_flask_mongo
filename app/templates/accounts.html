@@ -65,7 +65,7 @@
                         <td>
                             <a href="#">Detail</a>
                             <a href="#">Edit</a>
-                            <a hrep="#" ng-controller="deleteCtrl" ng-click="deleteFunction(account.account_number)">Delete</a>
+                            <a hrep="#"  ng-click="deleteFunction(account.account_number)">Delete</a>
                         </td>
                     </tr>
                 {% endraw %}
@@ -94,14 +94,17 @@ app.controller('listdata', function($scope, $http) {
         $scope.sortKey = keyname;
         $scope.reverse = !$scope.reverse;
     }
-});
-app.controller('deleteCtrl',function($scope, $http){
     $scope.deleteFunction = function(id){
-        $http.get('http://127.0.0.1:5000/delete?id='+ id).then(function(){
-            alert("Deleted!");
+    $http.get('http://127.0.0.1:5000/delete?id='+ id).then(function(){
+        alert("Deleted 2!");
+        $http.get('http://127.0.0.1:5000/search').then(function(response){
+        $scope.accounts = response.data;
+        console.log($scope.accounts);
         });
+    });
     }
 });
+
 </script>
 {% endblock %}
 

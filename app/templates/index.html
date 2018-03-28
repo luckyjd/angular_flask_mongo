@@ -1,14 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
-        {% if username %}
+    {% raw %}
+    <div ng-app="index_page" ng-controller="index_data">
         <p> Welcome {{ username }} !</p>
-        {% else %}
-        <p> No One Here </p>
-        {% endif %}
     </div>
-    <div>
-        <a href="{{ url_for('list') }}">List Account</a>
-    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='./page/index.js') }}"></script>
+    {% endraw %}
 {% endblock %}

@@ -17,17 +17,20 @@ def login_required(f):
 
 
 @app.route('/')
-def default():
-    return "nothing here"
+@app.route('/index')
+@login_required
+def index():
+    return render_template('index.html')
 
 
-# @app.route('/index')
-# @login_required
-# def index():
-#     if 'username' in session:
-#         return render_template('index.html', title='Home', username=session['username'])
-#     else:
-#         return render_template('index.html', title='Home')
+@app.route('/api/index')
+def api_index():
+    if 'username' in session:
+        msg = [{'title': 'Home', 'type': 'logged', 'user': 'username'}]
+        return dumps(msg)
+    else:
+        msg = [{'title': 'Home', 'type': 'none'}]
+        return dumps(msg)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -39,6 +42,7 @@ def login():
             flash("Invalid username or pass")
             return redirect(url_for('login'))
         session['username'] = form.username.data
+        #session['role'] = user.user_role
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -49,6 +53,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('role', None)
     return redirect(url_for('index'))
 
 
@@ -68,21 +73,24 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/index', methods=['GET', 'POST'])
-@login_required
-def index():
-    # choose database
-    #if request.method == 'POST':
+def check_role(id):
+    if db.User.find_one({'account_number': int(id)}):
+        return db.User.find_one({'account_number': int(id)}).user_role
+    else:
+        return False
 
-    list_account = db.Account.find()
-    return render_template('accounts.html', title='Accounts', accounts=list_account, username=session['username'])
+
+@app.route('/api/role', methods=['GET', 'POST'])
+def api_role():
+    if request.args.get('id'):
+        return check_role(request.args.get('id'))
+
+
+
 
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    # choose database
-    #if request.method == 'POST':
-
     list_account = dumps(db.Account.find())
     return list_account
 
