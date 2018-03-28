@@ -1,69 +1,108 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
+    <div ng-app="angularTable" >
         <h2>List Accounts</h2>
-        <div ng-app="myApp" ng-controller="myCtrl">
-            <table id="accounts">
-                <tr>
-                    <th>Account number</th>
-                    <th>Balance</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Employer</th>
-                    <th>Email</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="account_number" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="balance" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="firstname" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="lastname" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="age" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="gender" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="address" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="employer" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="email" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="city" placeholder="...." size="15" /></td>
-                    <td><input type="text" name="state" placeholder="...." size="15" /></td>
-                    <td><button>Search</button></td>
-                </tr>
-                {% for account in accounts %}
-                <tr>
-                    <td>{{account.account_number}}</td>
-                    <td>{{account.balance}}</td>
-                    <td>{{account.firstname}}</td>
-                    <td>{{account.lastname}}</td>
-                    <td>{{account.age}}</td>
-                    <td>{{account.gender}}</td>
-                    <td>{{account.address}}</td>
-                    <td>{{account.employer}}</td>
-                    <td>{{account.email}}</td>
-                    <td>{{account.city}}</td>
-                    <td>{{account.state}}</td>
-                    <td>
-                        <a href="#">Detail</a>
-                        <a href="#">Edit</a>
-                        <a href="#">Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Search</label>
+                <input type="text" ng-model="search" class="form-control" placeholder="Search">
+            </div>
+        </form>
+        <div ng-controller="listdata">
+            <table id="accounts" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th ng-click="sort('account_number')">Account number
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='account_number'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('balance')">Balance
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='balance'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('firstname')">Firstname
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='firstname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('lastname')">Lastname
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='lastname'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('age')">Age
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='age'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('gender')">Gender
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='gender'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('address')">Address
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='address'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('employer')">Employer
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='employer'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('email')">Email
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('city')">City
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='city'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('state')">State
+                            <span class="glyphicon sort-icon" ng-show="sortKey=='state'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% raw %}
+                    <tr dir-paginate="account in accounts|itemsPerPage:50|filter:search|orderBy:sortKey:reverse">
+                        <td>{{account.account_number}}</td>
+                        <td>{{account.balance}}</td>
+                        <td>{{account.firstname}}</td>
+                        <td>{{account.lastname}}</td>
+                        <td>{{account.age}}</td>
+                        <td>{{account.gender}}</td>
+                        <td>{{account.address}}</td>
+                        <td>{{account.employer}}</td>
+                        <td>{{account.email}}</td>
+                        <td>{{account.city}}</td>
+                        <td>{{account.state}}</td>
+                        <td>
+                            <a href="#">Detail</a>
+                            <a href="#">Edit</a>
+                            <a hrep="#" ng-controller="deleteCtrl" ng-click="deleteFunction(account.account_number)">Delete</a>
+                        </td>
+                    </tr>
+                {% endraw %}
+                </tbody>
+                <dir-pagination-controls
+                    max-size="10"
+                    direction-links="true"
+                    boundary-links="true">
+                </dir-pagination-controls>
             </table>
         </div>
     </div>
+
+
+{% endblock %}
+{% block script %}
+<script>
+var app = angular.module('angularTable', ['angularUtils.directives.dirPagination']);
+app.controller('listdata', function($scope, $http) {
+    $scope.accounts = [];
+    $http.get('http://127.0.0.1:5000/search').then(function(response){
+        $scope.accounts = response.data;
+        console.log($scope.accounts);
+    });
+    $scope.sort = function (keyname) {
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    }
+});
+app.controller('deleteCtrl',function($scope, $http){
+    $scope.deleteFunction = function(id){
+        $http.get('http://127.0.0.1:5000/delete?id='+ id).then(function(){
+            alert("Deleted!");
+        });
+    }
+});
+</script>
 {% endblock %}
 
-{% block script %}
-    var
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-      $http.get("welcome.htm")
-      .then(function(response) {
-          $scope.myWelcome = response.data;
-      });
-    });
-{% endblock %}
+

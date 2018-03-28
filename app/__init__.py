@@ -6,7 +6,7 @@ from config import Config
 from pymongo import MongoClient
 # from flask_mongoalchemy import MongoAlchemy
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config.from_object(Config)
 app.debug = True
 db = MongoClient('localhost', 27017).viettel

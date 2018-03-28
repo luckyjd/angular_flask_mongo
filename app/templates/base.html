@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="/static/angular.min.js"></script>
-    <script src="/static/angular-route.js"></script>
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='dirPagination.js') }}"></script>
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet"/>
     <link href="{{ url_for('static', filename='custom.css') }}" rel="stylesheet"/>
     <meta charset="UTF-8">
     {% if title %}
@@ -38,8 +37,9 @@
         {% endif %}
     {% endwith %}
     </div>
+    {% block script %}{% endblock %}
     {% block content %}{% endblock %}
-    {% block script %} {% endblock %}
+
     <hr>
     <div>
         <p>Footerrrr</p>

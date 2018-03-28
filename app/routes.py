@@ -1,11 +1,11 @@
 from app import app, db
-from flask import render_template, flash, redirect, url_for, request, session
+from flask import render_template, flash, redirect, url_for, request, session, jsonify
 from app.forms import LoginForm, RegistrationForm
 from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from functools import wraps
-
+from bson.json_util import dumps
 
 def login_required(f):
     @wraps(f)
@@ -78,6 +78,20 @@ def index():
     return render_template('accounts.html', title='Accounts', accounts=list_account, username=session['username'])
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    # choose database
+    #if request.method == 'POST':
+
+    list_account = dumps(db.Account.find())
+    return list_account
+
+
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
+    acc_number = request.args.get('id')
+    raw = db.Account.delete_one({'account_number': int(acc_number)})
+    return 'True'
 
 
 
